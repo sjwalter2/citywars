@@ -1,5 +1,3 @@
-import generator
-
 class member(object):
 
 	def __init__(self):
