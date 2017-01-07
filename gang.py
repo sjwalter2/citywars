@@ -1,26 +1,15 @@
 import random
 import member
+import generator
 
-firstwords = {}
-lastwords = {}
-
-with open("firstwords") as f:
-    i = 0
-    for word in f.readlines():
-        firstwords[i] = word.rstrip()
-        i += 1
-        
-with open("lastwords") as f:
-    i = 0
-    for word in f.readlines():
-        lastwords[i] = word.rstrip()
-        i += 1
+firstwordsgang = generator.wordlist("firstwordsgang")
+lastwordsgang = generator.wordlist("lastwordsgang")
 
 def firstname():
-    return firstwords[random.randint(0,len(firstwords)-1)]
+    return firstwordsgang[random.randint(0,len(firstwordsgang)-1)]
 
 def lastname():
-    return lastwords[random.randint(0,len(lastwords)-1)]
+    return lastwordsgang[random.randint(0,len(lastwordsgang)-1)]
 
 
 def name(input):
