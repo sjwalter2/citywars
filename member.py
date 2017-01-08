@@ -17,3 +17,32 @@ def name():
 class member(object):
 	def __init__(self):
             self.name = name()
+            self.setHeat(random.randint(0,100))
+            self.setNotoriety(random.randint(0,20))
+            self.setHonor(random.randint(90,100))
+
+        def step(self):
+            if self.heat > 0:
+                self.heat -= 1
+
+        def getName(self):
+            return self.name
+
+        def getHeat(self):
+            return self.heat
+
+        def setHeat(self,i):
+            self.heat = i
+
+        def getNotoriety(self):
+            return self.notoriety
+
+        def setNotoriety(self,i):
+            self.notoriety = i
+
+        def getHonor(self):
+            return self.honor
+
+        def setHonor(self,i):
+            self.honor = i
+

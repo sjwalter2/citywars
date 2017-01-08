@@ -20,4 +20,9 @@ class gang(object):
         def __init__(self):
             self.name = name("gang")
             self.leader = member.member()
-
+            self.members = [self.leader]
+            i = 0
+            j = random.randint(0,5)
+            while i < j:
+                self.members.append(member.member())
+                i += 1
