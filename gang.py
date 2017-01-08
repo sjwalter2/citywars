@@ -23,7 +23,20 @@ class gang(object):
             self.leader.setNotoriety(random.randint(18,30))
             self.members = [self.leader]
             i = 0
-            j = random.randint(0,5)
+            j = random.randint(2,5)
             while i < j:
                 self.members.append(member.member())
                 i += 1
+            self.symbol = random.choice('1234567890!@#$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/')
+        
+        def getName(self):
+            return self.name
+
+        def getMembers(self):
+            return self.members
+
+        def getLeader(self):
+            return self.leader
+
+        def getSymbol(self):
+            return self.symbol

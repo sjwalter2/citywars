@@ -1,9 +1,10 @@
 import gang
+import random
 from member import member
 from datetime import time, datetime, timedelta
 from time import sleep
 import os
-
+import block
 
 if os.name == 'nt':
     clear = 'cls'
@@ -12,6 +13,8 @@ else:
 
 count = 0
 
+
+##Gang generation
 gangs = [] 
 
 j = 0
@@ -19,6 +22,21 @@ while j < 4:
     gangs.append(gang.gang())
     j += 1
 
+##Block generation
+blocks = []
+
+j = 0
+while j < 5:
+    y = []
+    blocks.append(y)
+    i = 0
+    while i < 5:
+        blocks[j].append(block.block())
+        blocks[j][i].setOwner(gangs[random.randint(0,len(gangs)-1)])
+        i += 1
+    j += 1
+
+##Main Loop
 while(0==0):
     os.system(clear)
     a = datetime.now()
@@ -33,11 +51,23 @@ while(0==0):
     print count
     count += 1
     for gang in gangs:
-        print gang.name + ", Led by " + gang.leader.getName()
+        print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
         print "Members: "
-        for j in gang.members:
+        for j in gang.getMembers():
             print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor())
             j.step()
         print ""
+    print blocks[0][0].business.getName() + " " +  str(blocks[0][0].business.getIncome()) + " " + blocks[0][0].getOwner().getName()
+
+    i = 0
+    while i < len(blocks):
+        j = 0
+        line = ""
+        while j < len(blocks[i]):
+            line = line + blocks[i][j].getOwner().getSymbol()
+            j += 1
+        print line
+        i += 1
+
     while datetime.now() < endstep:
         sleep(0.000001)
