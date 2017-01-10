@@ -22,8 +22,12 @@ class member(object):
             self.setHonor(random.randint(90,100))
 
         def step(self):
+            eventarray = []
             if self.heat > 0:
                 self.heat -= 1
+            if random.randint(0,4) == 4:
+                eventarray.append(self.name + " did an event")
+            return eventarray
 
         def getName(self):
             return self.name

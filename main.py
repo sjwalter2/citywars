@@ -36,6 +36,8 @@ while j < 5:
         i += 1
     j += 1
 
+eventsarray = []
+
 ##Main Loop
 while(0==0):
     os.system(clear)
@@ -55,7 +57,10 @@ while(0==0):
         print "Members: "
         for j in gang.getMembers():
             print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor())
-            j.step()
+            events = j.step()
+            if len(events) > 0:
+                for event in events:
+                    eventsarray.append(event)
         print ""
     print blocks[0][0].business.getName() + " " +  str(blocks[0][0].business.getIncome()) + " " + blocks[0][0].getOwner().getName()
 
@@ -67,6 +72,11 @@ while(0==0):
             line = line + blocks[i][j].getOwner().getSymbol()
             j += 1
         print line
+        i += 1
+
+    i = 0
+    while i < len(eventsarray):
+        print eventsarray[i]
         i += 1
 
     while datetime.now() < endstep:
