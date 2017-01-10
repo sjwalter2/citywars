@@ -37,6 +37,7 @@ while j < 5:
     j += 1
 
 eventsarray = []
+EVENTS_LENGTH = 10
 
 ##Main Loop
 while(0==0):
@@ -78,6 +79,15 @@ while(0==0):
     while i < len(eventsarray):
         print eventsarray[i]
         i += 1
+
+    if len(eventsarray) > EVENTS_LENGTH:
+        i = 0
+        diff = len(eventsarray) - EVENTS_LENGTH
+        tmparray = []
+        while i < EVENTS_LENGTH:
+            tmparray.append(eventsarray[i + diff])
+            i += 1
+        eventsarray = tmparray
 
     while datetime.now() < endstep:
         sleep(0.000001)

@@ -25,7 +25,7 @@ class member(object):
             eventarray = []
             if self.heat > 0:
                 self.heat -= 1
-            if random.randint(0,4) == 4:
+            if random.randint(0,15) == 15:
                 eventarray.append(self.name + " did an event")
             return eventarray
 
