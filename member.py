@@ -15,19 +15,18 @@ def name():
     return firstname() + " " + lastname()
 
 class member(object):
-	def __init__(self):
+	def __init__(self,e):
+            self.e = e
             self.name = name()
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
 
         def step(self):
-            eventarray = []
             if self.heat > 0:
                 self.heat -= 1
             if random.randint(0,15) == 15:
-                eventarray.append(self.name + " did an event")
-            return eventarray
+                self.e.append(self.name + " did an event")
 
         def getName(self):
             return self.name

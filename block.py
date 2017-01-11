@@ -16,7 +16,8 @@ def name():
     return firstname() + " " + lastname()
 
 class block(object):
-        def __init__(self):
+        def __init__(self, e):
+            self.e = e
             self.name = name()
             self.owner = 0
             self.business = business.business()

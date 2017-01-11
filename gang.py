@@ -17,15 +17,16 @@ def name(input):
         return firstname() + " " + lastname()
 
 class gang(object):
-        def __init__(self):
+        def __init__(self, e):
+            self.e = e
             self.name = name("gang")
-            self.leader = member.member()
+            self.leader = member.member(self.e)
             self.leader.setNotoriety(random.randint(18,30))
             self.members = [self.leader]
             i = 0
             j = random.randint(2,5)
             while i < j:
-                self.members.append(member.member())
+                self.members.append(member.member(self.e))
                 i += 1
             self.symbol = random.choice('1234567890!@#$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/')
         

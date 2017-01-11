@@ -5,6 +5,7 @@ from datetime import time, datetime, timedelta
 from time import sleep
 import os
 import block
+import eventhandler
 
 if os.name == 'nt':
     clear = 'cls'
@@ -13,13 +14,14 @@ else:
 
 count = 0
 
+e = eventhandler.eventhandler()
 
 ##Gang generation
 gangs = [] 
 
 j = 0
 while j < 4:
-    gangs.append(gang.gang())
+    gangs.append(gang.gang(e))
     j += 1
 
 ##Block generation
@@ -31,13 +33,10 @@ while j < 5:
     blocks.append(y)
     i = 0
     while i < 5:
-        blocks[j].append(block.block())
+        blocks[j].append(block.block(e))
         blocks[j][i].setOwner(gangs[random.randint(0,len(gangs)-1)])
         i += 1
     j += 1
-
-eventsarray = []
-EVENTS_LENGTH = 10
 
 ##Main Loop
 while(0==0):
@@ -58,10 +57,7 @@ while(0==0):
         print "Members: "
         for j in gang.getMembers():
             print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor())
-            events = j.step()
-            if len(events) > 0:
-                for event in events:
-                    eventsarray.append(event)
+            j.step()
         print ""
     print blocks[0][0].business.getName() + " " +  str(blocks[0][0].business.getIncome()) + " " + blocks[0][0].getOwner().getName()
 
@@ -75,19 +71,7 @@ while(0==0):
         print line
         i += 1
 
-    i = 0
-    while i < len(eventsarray):
-        print eventsarray[i]
-        i += 1
-
-    if len(eventsarray) > EVENTS_LENGTH:
-        i = 0
-        diff = len(eventsarray) - EVENTS_LENGTH
-        tmparray = []
-        while i < EVENTS_LENGTH:
-            tmparray.append(eventsarray[i + diff])
-            i += 1
-        eventsarray = tmparray
+    e.step()
 
     while datetime.now() < endstep:
         sleep(0.000001)
