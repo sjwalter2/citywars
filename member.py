@@ -21,6 +21,7 @@ class member(object):
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
+            self.setInertia(random.randint(0,5))
 
         def step(self):
             if self.heat > 0:
@@ -49,3 +50,8 @@ class member(object):
         def setHonor(self,i):
             self.honor = i
 
+        def setInertia(self,i):
+            self.Inertia = i
+
+        def getInertia(self):
+            return self.Inertia

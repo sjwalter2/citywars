@@ -52,14 +52,24 @@ while(0==0):
                         #stupid python datetime module
     print count
     count += 1
+
+    ## print gang info
     for gang in gangs:
         print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
         print "Members: "
         for j in gang.getMembers():
-            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor())
+            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
             j.step()
         print ""
-    print blocks[0][0].business.getName() + " " +  str(blocks[0][0].business.getIncome()) + " " + blocks[0][0].getOwner().getName()
+
+    ## print businesses
+    i = 0
+    while i < len(blocks):
+        j = 0
+        while j < len(blocks[i]):
+            print blocks[i][j].business.getName() + " " +  str(blocks[i][j].business.getIncome()) + " " + blocks[i][j].getOwner().getName()
+            j += 1
+        i += 1
 
     i = 0
     while i < len(blocks):
