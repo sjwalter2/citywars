@@ -59,8 +59,8 @@ def wipeBlocks(gang):
 while(0==0):
     os.system(clear)
     a = datetime.now()
-    if a.second < 59:
-        endstep = datetime(a.year,a.month,a.day,a.hour,a.minute,a.second+1,a.microsecond,a.tzinfo)
+    if a.second < 58:
+        endstep = datetime(a.year,a.month,a.day,a.hour,a.minute,a.second+2,a.microsecond,a.tzinfo)
     else:
         if a.minute < 59:
             endstep = datetime(a.year,a.month,a.day,a.hour,a.minute+1,(a.second+1)%60,a.microsecond,a.tzinfo)
@@ -85,6 +85,8 @@ while(0==0):
                     e.append(targetgang.getName() + " has been disbanded!")
                     gangs.remove(targetgang)
                     wipeBlocks(targetgang)
+                    if len(gangs) == 1:
+                        print gangs[0].getName() + " has taken over the city!"
         print ""
 
     ## print businesses
