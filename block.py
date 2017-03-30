@@ -25,8 +25,8 @@ class block(object):
         def getOwner(self):
             return self.owner
 
-        def setOwner(self,input):
-            self.owner = input
+        def setOwner(self,owner):
+            self.owner = owner
 
         def getBusiness(self):
             return self.business

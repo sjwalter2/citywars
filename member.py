@@ -15,9 +15,10 @@ def name():
     return firstname() + " " + lastname()
 
 class member(object):
-	def __init__(self,e):
+	def __init__(self,e,gang):
             self.e = e
             self.name = name()
+            self.gang = gang
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
@@ -27,7 +28,9 @@ class member(object):
             if self.heat > 0:
                 self.heat -= 1
             if random.randint(0,15) == 15:
-                self.e.append(self.name + " did an event")
+                self.heat += 50
+                return 1
+            return 0
 
         def getName(self):
             return self.name
@@ -55,3 +58,6 @@ class member(object):
 
         def getInertia(self):
             return self.Inertia
+
+        def getGang(self):
+            return self.gang
