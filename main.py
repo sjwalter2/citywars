@@ -54,6 +54,22 @@ def wipeBlocks(gang):
             j += 1
         i += 1
 
+def printBlocks():
+    ## print block map
+    i = 0
+    while i < len(blocks):
+        j = 0
+        line = ""
+        while j < len(blocks[i]):
+            if blocks[i][j].getOwner() == 0:
+                line = line + '#'
+            else:
+                line = line + blocks[i][j].getOwner().getSymbol()
+            j += 1
+        print line
+        i += 1
+
+
 ##===================================================================================================================================================
 ##Main Loop
 while(0==0):
@@ -63,7 +79,7 @@ while(0==0):
         endstep = datetime(a.year,a.month,a.day,a.hour,a.minute,a.second+2,a.microsecond,a.tzinfo)
     else:
         if a.minute < 59:
-            endstep = datetime(a.year,a.month,a.day,a.hour,a.minute+1,(a.second+1)%60,a.microsecond,a.tzinfo)
+            endstep = datetime(a.year,a.month,a.day,a.hour,a.minute+1,(a.second+2)%60,a.microsecond,a.tzinfo)
         else:
             endstep = a #this happens once every hour. Essentially by saying tihs, I am saying "at the end of this step just go ahead and start the next step because I cannot be assed to keep this going"
                         #stupid python datetime module
@@ -87,6 +103,8 @@ while(0==0):
                     wipeBlocks(targetgang)
                     if len(gangs) == 1:
                         print gangs[0].getName() + " has taken over the city!"
+                        printBlocks()
+                        exit()
         print ""
 
     ## print businesses
@@ -98,20 +116,7 @@ while(0==0):
     #        j += 1
     #    i += 1
 
-    ## print block map
-    i = 0
-    while i < len(blocks):
-        j = 0
-        line = ""
-        while j < len(blocks[i]):
-            if blocks[i][j].getOwner() == 0:
-                line = line + '#'
-            else:
-                line = line + blocks[i][j].getOwner().getSymbol()
-            j += 1
-        print line
-        i += 1
-
+    printBlocks()
     e.step()
 
     while datetime.now() < endstep:
