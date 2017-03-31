@@ -17,7 +17,7 @@ count = 0
 e = eventhandler.eventhandler()
 ##===================================================================================================================================================
 ##===================================================================================================================================================
-##Gang generation
+##Gang functions
 gangs = [] 
 
 j = 0
@@ -25,6 +25,26 @@ while j < 4:
     gangs.append(gang.gang(e))
     j += 1
 
+def printGangs():
+    for gang in gangs:
+        print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
+        print "Members: "
+        for j in gang.getMembers():
+            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+            if j.step() == 1:
+                targetgang = gangs[random.randint(0,len(gangs)-1)]
+                while targetgang.getName() == gang.getName():
+                    targetgang = gangs[random.randint(0,len(gangs)-1)]
+                targetgang.kill(j)
+                if len(targetgang.getMembers()) == 0:
+                    e.append(targetgang.getName() + " has been disbanded!")
+                    gangs.remove(targetgang)
+                    wipeBlocks(targetgang)
+                    if len(gangs) == 1:
+                        print gangs[0].getName() + " has taken over the city!"
+                        printBlocks()
+                        exit()
+        print ""
 ##===================================================================================================================================================
 ##===================================================================================================================================================
 ##Block generation
@@ -87,25 +107,7 @@ while(0==0):
     count += 1
 
     ## print gang info
-    for gang in gangs:
-        print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
-        print "Members: "
-        for j in gang.getMembers():
-            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
-            if j.step() == 1:
-                targetgang = gangs[random.randint(0,len(gangs)-1)]
-                while targetgang.getName() == gang.getName():
-                    targetgang = gangs[random.randint(0,len(gangs)-1)]
-                targetgang.kill(j)
-                if len(targetgang.getMembers()) == 0:
-                    e.append(targetgang.getName() + " has been disbanded!")
-                    gangs.remove(targetgang)
-                    wipeBlocks(targetgang)
-                    if len(gangs) == 1:
-                        print gangs[0].getName() + " has taken over the city!"
-                        printBlocks()
-                        exit()
-        print ""
+    printGangs()
 
     ## print businesses
     #i = 0

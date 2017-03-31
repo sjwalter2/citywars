@@ -44,7 +44,9 @@ class gang(object):
 
         def kill(self,killer):
             target = self.members.pop(random.randint(0,len(self.members)-1))
-            self.e.append(killer.getName() + " of " + killer.getGang().getName() + " killed " + target.getName() + " of " + self.name)
+            noteriety = target.getNotoriety()
+            killer.setNotoriety(killer.getNotoriety() + target.getNotoriety()//3)
+            self.e.append(killer.getName() + "(" + str(killer.getNotoriety()) + ") of " + killer.getGang().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + self.name)
             if len(self.members) == 0:
                 return
             if target == self.leader:
