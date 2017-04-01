@@ -21,11 +21,12 @@ class gang(object):
         def __init__(self, e):
             self.e = e
             self.name = name("gang")
+            self.blocks = 0
             self.leader = member.member(self.e,self)
             self.leader.setNotoriety(random.randint(18,30))
             self.members = [self.leader]
             i = 0
-            j = random.randint(2,5)
+            j = random.randint(3,4)
             while i < j:
                 self.members.append(member.member(self.e,self))
                 i += 1
@@ -42,6 +43,12 @@ class gang(object):
 
         def getSymbol(self):
             return self.symbol
+
+        def changeBlockNum(self,i):
+            self.blocks += i
+
+        def getBlockNum(self):
+            return self.blocks
 
         def dies(self,victim):
             for i in self.members:

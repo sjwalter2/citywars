@@ -21,7 +21,7 @@ e = eventhandler.eventhandler()
 gangs = [] 
 
 j = 0
-while j < 4:
+while j < 5:
     gangs.append(gang.gang(e))
     j += 1
 
@@ -36,23 +36,37 @@ def stepGangs():
                         targetgang = gangs[random.randint(0,len(gangs)-1)]
                     targetgang.kill(j)
                     if len(targetgang.getMembers()) == 0:
-                        e.append(targetgang.getName() + " has been disbanded!")
-                        gangs.remove(targetgang)
-                        wipeBlocks(targetgang)
-                        if len(gangs) == 1:
-                            print gangs[0].getName() + " has taken over the city!"
-                            printBlocks()
-                            exit()
+                        destroyGang(targetgang)
                 else:
                     targetblocks = []
                     for blockx in blocks:
                         for blocky in blockx:
                             if blocky.getOwner() != gang:
                                 targetblocks.append(blocky)
-                    target = targetblocks[random.randint(0,len(targetblocks)-1)]
-                    e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " from " + target.getOwner().getName() + "!")
-                    target.setOwner(gang)
+                    ## I assert that len(targetblocks) could be 0 if we are playing that a gang can still exist with 0 territory, or that a gang is fighting against non-territory holders
+                    if len(targetblocks) == 0:
+                        e.append("Alas, " + j.getName() + " has found there are no more mountains to conquer!")
+                    else:
+                        target = targetblocks[random.randint(0,len(targetblocks)-1)]
+                        targetOwner = target.getOwner()
+                        if type(targetOwner) != type(0):
+                            e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
+                            targetOwner.changeBlockNum(-1)
+                            if targetOwner.getBlockNum() == 0:
+                                destroyGang(targetOwner)
+                        else:
+                            e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
+                        gang.changeBlockNum(1)
+                        target.setOwner(gang)
 
+def destroyGang(gang):
+    e.append(gang.getName() + " has been disbanded!")
+    gangs.remove(gang)
+    wipeBlocks(gang)
+    if len(gangs) == 1:
+        print gangs[0].getName() + " has taken over the city!"
+        printBlocks()
+        exit()
 
 def printGangs():
         for gang in gangs:
@@ -74,7 +88,9 @@ while j < 5:
     i = 0
     while i < 5:
         blocks[j].append(block.block(e,i,j))
-        blocks[j][i].setOwner(gangs[random.randint(0,len(gangs)-1)])
+        newowner = gangs[random.randint(0,len(gangs)-1)]
+        blocks[j][i].setOwner(newowner)
+        newowner.changeBlockNum(1)
         i += 1
     j += 1
 
