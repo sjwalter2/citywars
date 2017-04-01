@@ -1,3 +1,4 @@
+from __future__ import division
 import random
 import member
 import generator
@@ -42,13 +43,28 @@ class gang(object):
         def getSymbol(self):
             return self.symbol
 
+        def dies(self,victim):
+            for i in self.members:
+                if i == victim:
+                    self.members.pop(victim)
+                    return
+            self.e.append(victim + " was supposed to die, but I couldn't find them!")
+
         def kill(self,killer):
-            target = self.members.pop(random.randint(0,len(self.members)-1))
-            noteriety = target.getNotoriety()
-            killer.setNotoriety(killer.getNotoriety() + target.getNotoriety()//3)
-            self.e.append(killer.getName() + "(" + str(killer.getNotoriety()) + ") of " + killer.getGang().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + self.name)
-            if len(self.members) == 0:
-                return
-            if target == self.leader:
-                self.leader = self.members[random.randint(0,len(self.members)-1)]
-                self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
+            target = self.members[random.randint(0,len(self.members)-1)]
+            if target.getNotoriety() == 0:
+                chance = 100
+            else:
+                chance = killer.getNotoriety()/ (target.getNotoriety() * 2)
+            if random.random() < chance:
+                self.members.remove(target)
+                noteriety = target.getNotoriety()
+                killer.setNotoriety(killer.getNotoriety() + target.getNotoriety()//3)
+                self.e.append(killer.getName() + "(" + str(killer.getNotoriety()) + ") of " + killer.getGang().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + self.name)
+                if len(self.members) == 0:
+                    return
+                if target == self.leader:
+                    self.leader = self.members[random.randint(0,len(self.members)-1)]
+                    self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
+            else:
+                self.e.append(killer.getName() + " failed to kill " + target.getName() + "!")
