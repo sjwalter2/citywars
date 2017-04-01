@@ -25,26 +25,43 @@ while j < 4:
     gangs.append(gang.gang(e))
     j += 1
 
-def printGangs():
+def stepGangs():
     for gang in gangs:
-        print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
-        print "Members: "
         for j in gang.getMembers():
-            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
             if j.step() == 1:
-                targetgang = gangs[random.randint(0,len(gangs)-1)]
-                while targetgang.getName() == gang.getName():
+                ##60% chance to attempt to take a block; 40% chance to attempt to assassinate an opponent
+                if random.random() < 0.4:
                     targetgang = gangs[random.randint(0,len(gangs)-1)]
-                targetgang.kill(j)
-                if len(targetgang.getMembers()) == 0:
-                    e.append(targetgang.getName() + " has been disbanded!")
-                    gangs.remove(targetgang)
-                    wipeBlocks(targetgang)
-                    if len(gangs) == 1:
-                        print gangs[0].getName() + " has taken over the city!"
-                        printBlocks()
-                        exit()
-        print ""
+                    while targetgang.getName() == gang.getName():
+                        targetgang = gangs[random.randint(0,len(gangs)-1)]
+                    targetgang.kill(j)
+                    if len(targetgang.getMembers()) == 0:
+                        e.append(targetgang.getName() + " has been disbanded!")
+                        gangs.remove(targetgang)
+                        wipeBlocks(targetgang)
+                        if len(gangs) == 1:
+                            print gangs[0].getName() + " has taken over the city!"
+                            printBlocks()
+                            exit()
+                else:
+                    targetblocks = []
+                    for blockx in blocks:
+                        for blocky in blockx:
+                            if blocky.getOwner() != gang:
+                                targetblocks.append(blocky)
+                    target = targetblocks[random.randint(0,len(targetblocks)-1)]
+                    e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " from " + target.getOwner().getName() + "!")
+                    target.setOwner(gang)
+
+
+def printGangs():
+        for gang in gangs:
+            print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
+            print "Members: "
+            for j in gang.getMembers():
+                print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+            print ""
+
 ##===================================================================================================================================================
 ##===================================================================================================================================================
 ##Block generation
@@ -56,7 +73,7 @@ while j < 5:
     blocks.append(y)
     i = 0
     while i < 5:
-        blocks[j].append(block.block(e))
+        blocks[j].append(block.block(e,i,j))
         blocks[j][i].setOwner(gangs[random.randint(0,len(gangs)-1)])
         i += 1
     j += 1
@@ -106,9 +123,9 @@ while(0==0):
     print count
     count += 1
 
-    ## print gang info
+    ## gangs take turn
+    stepGangs()
     printGangs()
-
     ## print businesses
     #i = 0
     #while i < len(blocks):

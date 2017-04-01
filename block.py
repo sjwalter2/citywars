@@ -16,11 +16,12 @@ def name():
     return firstname() + " " + lastname()
 
 class block(object):
-        def __init__(self, e):
+        def __init__(self, e, x, y):
             self.e = e
             self.name = name()
             self.owner = 0
             self.business = business.business()
+            self.coordinates = str(x) + "," + str(y)
 
         def getOwner(self):
             return self.owner
@@ -30,3 +31,6 @@ class block(object):
 
         def getBusiness(self):
             return self.business
+
+        def getCoordinates(self):
+            return self.coordinates
