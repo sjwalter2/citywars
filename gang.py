@@ -63,6 +63,8 @@ class gang(object):
                 chance = 100
             else:
                 chance = killer.getNotoriety()/ (target.getNotoriety() * 2)
+            if chance == 0:
+                chance = 0.01
             if random.random() < chance:
                 self.members.remove(target)
                 noteriety = target.getNotoriety()

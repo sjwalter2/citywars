@@ -50,11 +50,13 @@ def stepGangs():
                         target = targetblocks[random.randint(0,len(targetblocks)-1)]
                         targetOwner = target.getOwner()
                         if type(targetOwner) != type(0):
+                            j.setNotoriety(j.getNotoriety() + 10)
                             e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
                             targetOwner.changeBlockNum(-1)
                             if targetOwner.getBlockNum() == 0:
                                 destroyGang(targetOwner)
                         else:
+                            j.setNotoriety(j.getNotoriety() + 5)
                             e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
                         gang.changeBlockNum(1)
                         target.setOwner(gang)
