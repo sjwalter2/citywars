@@ -67,4 +67,4 @@ class gang(object):
                     self.leader = self.members[random.randint(0,len(self.members)-1)]
                     self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
             else:
-                self.e.append(killer.getName() + " failed to kill " + target.getName() + "!")
+                self.e.append(killer.getName() + " of " + killer.getGang().getName() + " failed to kill " + target.getName() + " of " + target.getGang().getName() + "!")
