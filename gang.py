@@ -56,8 +56,10 @@ class gang(object):
                 if victim == self.leader:
                     self.leader = self.members[random.randint(0,len(self.members)-1)]
                     self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
+                return 1
             except:
-                self.e.append(victim + " was supposed to die, but I couldn't find them!")
+                self.e.append(victim.getName() + " was supposed to die, but I couldn't find them!")
+                return 0
 
         def kill(self,killer):
             target = self.members[random.randint(0,len(self.members)-1)]
@@ -88,5 +90,6 @@ class gang(object):
                 if random.random() < chance:
                     self.e.append(killer.getName() + " of " + killer.getGang().getName() + " was killed by " + target.getName() + " of " + target.getGang().getName() + " in self-defense!")
                     target.setNotoriety(target.getNotoriety() + killer.getNotoriety()//3)
-                    killer.getGang().dies(killer)
-                    
+                    if killer.getGang().dies(killer) == 0:
+                        print(killer.getName() + " " + target.getName())
+                        quit()
