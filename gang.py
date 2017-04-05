@@ -51,11 +51,13 @@ class gang(object):
             return self.blocks
 
         def dies(self,victim):
-            for i in self.members:
-                if i == victim:
-                    self.members.pop(victim)
-                    return
-            self.e.append(victim + " was supposed to die, but I couldn't find them!")
+            try:    
+                self.members.remove(victim)
+                if victim == self.leader:
+                    self.leader = self.members[random.randint(0,len(self.members)-1)]
+                    self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
+            except:
+                self.e.append(victim + " was supposed to die, but I couldn't find them!")
 
         def kill(self,killer):
             target = self.members[random.randint(0,len(self.members)-1)]
@@ -77,3 +79,14 @@ class gang(object):
                     self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
             else:
                 self.e.append(killer.getName() + " of " + killer.getGang().getName() + " failed to kill " + target.getName() + " of " + target.getGang().getName() + "!")
+                if killer.getNotoriety() == 0:
+                    chance = 100
+                else:
+                    chance = target.getNotoriety()/(killer.getNotoriety() * 5)
+                if chance == 0:
+                    chance = 0.01
+                if random.random() < chance:
+                    self.e.append(killer.getName() + " of " + killer.getGang().getName() + " was killed by " + target.getName() + " of " + target.getGang().getName() + " in self-defense!")
+                    target.setNotoriety(target.getNotoriety() + killer.getNotoriety()//3)
+                    killer.getGang().dies(killer)
+                    
