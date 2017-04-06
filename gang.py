@@ -41,33 +41,3 @@ class gang(group):
         def getBlockNum(self):
             return self.blocks
 
-        def kill(self,killer):
-            target = self.members[random.randint(0,len(self.members)-1)]
-            if target.getNotoriety() == 0:
-                chance = 100
-            else:
-                chance = killer.getNotoriety()/ (target.getNotoriety() * 2)
-            if chance == 0:
-                chance = 0.01
-            if random.random() < chance:
-                self.members.remove(target)
-                noteriety = target.getNotoriety()
-                killer.setNotoriety(killer.getNotoriety() + target.getNotoriety()//3)
-                self.e.append(killer.getName() + "(" + str(killer.getNotoriety()) + ") of " + killer.getGroup().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + self.name)
-                if len(self.members) == 0:
-                    return
-                if target == self.leader:
-                    self.leader = self.members[random.randint(0,len(self.members)-1)]
-                    self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
-            else:
-                self.e.append(killer.getName() + " of " + killer.getGroup().getName() + " failed to kill " + target.getName() + " of " + target.getGroup().getName() + "!")
-                if killer.getNotoriety() == 0:
-                    chance = 100
-                else:
-                    chance = target.getNotoriety()/(killer.getNotoriety() * 5)
-                if chance == 0:
-                    chance = 0.01
-                if random.random() < chance:
-                    self.e.append(killer.getName() + " of " + killer.getGroup().getName() + " was killed by " + target.getName() + " of " + target.getGroup().getName() + " in self-defense!")
-                    target.setNotoriety(target.getNotoriety() + killer.getNotoriety()//3)
-                    killer.getGroup().dies(killer)

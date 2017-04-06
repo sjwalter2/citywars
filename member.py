@@ -61,3 +61,38 @@ class member(object):
 
         def getGroup(self):
             return self.group
+
+        def kill(self, targetgang):
+            target = targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)]
+            if target.getNotoriety() == 0:
+                chance = 100
+            else:
+                chance = self.notoriety / (target.getNotoriety() * 2)
+            if chance == 0:
+                chance = 0.01
+            if random.random() < chance:
+                targetgang.dies(target)
+                noteriety = target.getNotoriety()
+                self.notoriety = self.notoriety + target.getNotoriety()//3
+                self.e.append(self.name + "(" + str(self.notoriety) + ") of " + self.getGroup().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + targetgang.getName())
+                if len(targetgang.getMembers()) == 0:
+                    self.notoriety = self.notoriety + 30
+                    return
+                if target == targetgang.getLeader():
+                    targetgang.setLeader(targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)])
+                    self.e.append(targetgang.getLeader().getName() + " is now the leader of " + targetgang.getName() + "!")
+            else:
+                self.e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
+                if self.notoriety == 0:
+                    chance = 100
+                else:
+                    chance = target.getNotoriety()/(self.notoriety * 5)
+                if chance == 0:
+                    chance = 0.01
+                if random.random() < chance:
+                    self.e.append(self.name + " of " + self.getGroup().getName() + " was killed by " + target.getName() + " of " + targetgang.getName() + " in self-defense!")
+                    target.setNotoriety(target.getNotoriety() + self.notoriety//3)
+                    self.getGroup().dies(self)
+                    if len(self.getGroup().getMembers()) == 0:
+                        target.setNotoriety(target.getNotoriety() + 30)
+

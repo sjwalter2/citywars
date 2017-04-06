@@ -48,7 +48,7 @@ def stepGangs():
                     targetgang = gangs[random.randint(0,len(gangs)-1)]
                     while targetgang.getName() == gang.getName():
                         targetgang = gangs[random.randint(0,len(gangs)-1)]
-                    targetgang.kill(j)
+                    j.kill(targetgang)
                     if len(targetgang.getMembers()) == 0:
                         destroyGang(targetgang)
                     if len(gang.getMembers()) == 0:
@@ -71,6 +71,7 @@ def stepGangs():
                             targetOwner.changeBlockNum(-1)
                             if targetOwner.getBlockNum() == 0:
                                 destroyGang(targetOwner)
+                                j.setNotoriety(j.getNotoriety + 30)
                         else:
                             j.setNotoriety(j.getNotoriety() + 5)
                             e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
@@ -80,7 +81,7 @@ def stepGangs():
         for j in heroes.getMembers():
             if j.step() == 1:
                 targetgang = gangs[random.randint(0,len(gangs)-1)]
-                targetgang.kill(j)
+                j.kill(targetgang)
                 if len(targetgang.getMembers()) == 0:
                     destroyGang(targetgang)
                 if len(heroes.getMembers()) == 0:
