@@ -1,6 +1,8 @@
 import gang
+import league
 import random
 from member import member
+from hero import hero
 from datetime import time, datetime, timedelta
 from time import sleep
 import os
@@ -15,6 +17,17 @@ else:
 count = 0
 
 e = eventhandler.eventhandler()
+
+##===================================================================================================================================================
+##League functions
+
+heroes = league.league(e)
+def printLeagues():
+    print heroes.getName()
+    print "Members:"
+    for j in heroes.getMembers():
+        print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+    print ""
 ##===================================================================================================================================================
 ##===================================================================================================================================================
 ##Gang functions
@@ -144,6 +157,7 @@ while(0==0):
     ## gangs take turn
     stepGangs()
     printGangs()
+    printLeagues()
     ## print businesses
     #i = 0
     #while i < len(blocks):

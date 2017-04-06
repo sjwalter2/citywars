@@ -14,14 +14,13 @@ def lastname():
     return lastwordsgang[random.randint(0,len(lastwordsgang)-1)]
 
 
-def name(input):
-    if(input == "gang"):
-        return firstname() + " " + lastname()
+def name():
+    return firstname() + " " + lastname()
 
 class gang(group):
         def __init__(self, e):
             group.__init__(self,e)
-            self.name = name("gang")
+            self.name = name()
             self.blocks = 0
             self.leader = member.member(self.e,self)
             self.leader.setNotoriety(random.randint(18,30))
