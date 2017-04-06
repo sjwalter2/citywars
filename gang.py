@@ -70,4 +70,4 @@ class gang(group):
                 if random.random() < chance:
                     self.e.append(killer.getName() + " of " + killer.getGroup().getName() + " was killed by " + target.getName() + " of " + target.getGroup().getName() + " in self-defense!")
                     target.setNotoriety(target.getNotoriety() + killer.getNotoriety()//3)
-                    killer.getGroup().dies(killer) == 0
+                    killer.getGroup().dies(killer)

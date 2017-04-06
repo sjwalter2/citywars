@@ -24,7 +24,7 @@ e = eventhandler.eventhandler()
 heroes = league.league(e)
 def printLeagues():
     if heroes.getActive() == 1:
-        print heroes.getName()
+        print heroes.getName() + ", led by " + heroes.getLeader().getName()
         print "Members:"
         for j in heroes.getMembers():
             print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
@@ -51,6 +51,8 @@ def stepGangs():
                     targetgang.kill(j)
                     if len(targetgang.getMembers()) == 0:
                         destroyGang(targetgang)
+                    if len(gang.getMembers()) == 0:
+                        destroyGang(gang)
                 else:
                     targetblocks = []
                     for blockx in blocks:
