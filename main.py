@@ -23,11 +23,12 @@ e = eventhandler.eventhandler()
 
 heroes = league.league(e)
 def printLeagues():
-    print heroes.getName()
-    print "Members:"
-    for j in heroes.getMembers():
-        print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
-    print ""
+    if heroes.getActive() == 1:
+        print heroes.getName()
+        print "Members:"
+        for j in heroes.getMembers():
+            print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+        print ""
 ##===================================================================================================================================================
 ##===================================================================================================================================================
 ##Gang functions
@@ -73,6 +74,17 @@ def stepGangs():
                             e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
                         gang.changeBlockNum(1)
                         target.setOwner(gang)
+    if heroes.getActive() == 1:
+        for j in heroes.getMembers():
+            if j.step() == 1:
+                targetgang = gangs[random.randint(0,len(gangs)-1)]
+                targetgang.kill(j)
+                if len(targetgang.getMembers()) == 0:
+                    destroyGang(targetgang)
+                if len(heroes.getMembers()) == 0:
+                    e.append(heroes.getName() + " has been disbanded!")
+                    heroes.setActive(0)
+
 
 def destroyGang(gang):
     e.append(gang.getName() + " has been disbanded!")

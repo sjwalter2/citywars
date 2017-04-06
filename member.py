@@ -18,7 +18,7 @@ class member(object):
 	def __init__(self,e,gang):
             self.e = e
             self.name = name()
-            self.gang = gang
+            self.group = gang
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
@@ -59,5 +59,5 @@ class member(object):
         def getInertia(self):
             return self.Inertia
 
-        def getGang(self):
-            return self.gang
+        def getGroup(self):
+            return self.group

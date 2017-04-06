@@ -20,6 +20,7 @@ class league(group):
     def __init__(self,e):
         group.__init__(self,e)
         self.name = name()
+        self.active = 1
         self.leader = hero.hero(self.e,self)
         self.members = [self.leader]
         i = 0
@@ -28,3 +29,8 @@ class league(group):
             self.members.append(hero.hero(self.e,self))
             i += 1
 
+    def getActive(self):
+        return self.active
+
+    def setActive(self,num):
+        self.active = num

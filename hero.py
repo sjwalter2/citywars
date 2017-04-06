@@ -18,7 +18,7 @@ class hero(object):
 	def __init__(self,e,league):
             self.e = e
             self.name = name()
-            self.league = league
+            self.group = league
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
@@ -27,8 +27,8 @@ class hero(object):
         def step(self):
             if self.heat > 0:
                 self.heat -= 1
-            if random.randint(0,15) == 15:
-                self.heat += 50
+            if random.randint(0,10) == 10:
+                self.heat += 70
                 return 1
             return 0
 
@@ -59,5 +59,5 @@ class hero(object):
         def getInertia(self):
             return self.Inertia
 
-        def getLeague(self):
-            return self.league
+        def getGroup(self):
+            return self.group
