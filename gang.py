@@ -2,6 +2,7 @@ from __future__ import division
 import random
 import member
 import generator
+from group import group
 
 firstwordsgang = generator.wordlist("firstwordsgang")
 lastwordsgang = generator.wordlist("lastwordsgang")
@@ -17,9 +18,9 @@ def name(input):
     if(input == "gang"):
         return firstname() + " " + lastname()
 
-class gang(object):
+class gang(group):
         def __init__(self, e):
-            self.e = e
+            group.__init__(self,e)
             self.name = name("gang")
             self.blocks = 0
             self.leader = member.member(self.e,self)
@@ -32,15 +33,6 @@ class gang(object):
                 i += 1
             self.symbol = random.choice('1234567890!@$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/')
         
-        def getName(self):
-            return self.name
-
-        def getMembers(self):
-            return self.members
-
-        def getLeader(self):
-            return self.leader
-
         def getSymbol(self):
             return self.symbol
 
@@ -49,17 +41,6 @@ class gang(object):
 
         def getBlockNum(self):
             return self.blocks
-
-        def dies(self,victim):
-            try:    
-                self.members.remove(victim)
-                if victim == self.leader:
-                    self.leader = self.members[random.randint(0,len(self.members)-1)]
-                    self.e.append(self.leader.getName() + " is now the leader of " + self.name + "!")
-                return 1
-            except:
-                self.e.append(victim.getName() + " was supposed to die, but I couldn't find them!")
-                return 0
 
         def kill(self,killer):
             target = self.members[random.randint(0,len(self.members)-1)]
@@ -90,6 +71,4 @@ class gang(object):
                 if random.random() < chance:
                     self.e.append(killer.getName() + " of " + killer.getGang().getName() + " was killed by " + target.getName() + " of " + target.getGang().getName() + " in self-defense!")
                     target.setNotoriety(target.getNotoriety() + killer.getNotoriety()//3)
-                    if killer.getGang().dies(killer) == 0:
-                        print(killer.getName() + " " + target.getName())
-                        quit()
+                    killer.getGang().dies(killer)
