@@ -71,7 +71,7 @@ def stepGangs():
                             targetOwner.changeBlockNum(-1)
                             if targetOwner.getBlockNum() == 0:
                                 destroyGang(targetOwner)
-                                j.setNotoriety(j.getNotoriety + 30)
+                                j.setNotoriety(j.getNotoriety() + 30)
                         else:
                             j.setNotoriety(j.getNotoriety() + 5)
                             e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
