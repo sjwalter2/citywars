@@ -41,19 +41,54 @@ class gang(group):
         def getBlockNum(self):
             return self.blocks
 
-        def takeBlock(self,blocks,j):
-            targetblocks = []
+        ##Choose a block, adjacent to an owned block, that this gang does not own
+        def chooseBlock(self,blocks):
+            ownedblocks = []
             for blockx in blocks:
                 for blocky in blockx:
-                    if type(blocky.getOwner()) == type(0):
+                    if type(blocky.getOwner()) != type(0):
+                        if blocky.getOwner().getName() == self.name:
+                            ownedblocks.append(blocky)
+            ## I assert that len(ownedblocks) can be 0, if we are playing a game where a gang lives with no territory. Thus we will return a completely random block
+            if len(ownedblocks) == 0:
+                targetblocks = []
+                for blockx in blocks:
+                    for blocky in blockx:
                         targetblocks.append(blocky)
-                    elif blocky.getOwner().getName() != self.name:
-                        targetblocks.append(blocky)
-                    ## I assert that len(targetblocks) could be 0 if we are playing that a gang can still exist with 0 territory, or that a gang is fighting against non-territory holders
-            if len(targetblocks) == 0:
+                return targetblocks[random.randint(0,len(targetblocks)-1)]
+            ## At this point we have a list of owned blocks; now we randomly select from them and find an adjacent unowned block. If all adjacent blocks are owned, pop the block.
+            ## If we get to 0 owned blocks, then we own all territory, so we return 0.
+            while len(ownedblocks) > 0:
+                testblock = ownedblocks[random.randint(0,len(ownedblocks)-1)]
+                adjacentblocks = []
+                if testblock.getX() != 0:
+                    targblock = blocks[testblock.getY()][testblock.getX()-1]
+                    if targblock.getOwner() != self:
+                        adjacentblocks.append(targblock)
+                if testblock.getX() != len(blocks[0])-1:
+                    targblock = blocks[testblock.getY()][testblock.getX()+1]
+                    if targblock.getOwner() != self:
+                        adjacentblocks.append(targblock)
+                if testblock.getY() != 0:
+                    targblock = blocks[testblock.getY()-1][testblock.getX()]
+                    if targblock.getOwner() != self:
+                        adjacentblocks.append(targblock)
+                if testblock.getY() != len(blocks)-1:
+                    targblock = blocks[testblock.getY()+1][testblock.getX()]
+                    if targblock.getOwner() != self:
+                        adjacentblocks.append(targblock)
+                if len(adjacentblocks) == 0:
+                    ownedblocks.remove(testblock)
+                else:
+                    return adjacentblocks[random.randint(0,len(adjacentblocks)-1)]
+            return 0
+
+        def takeBlock(self,blocks,j):
+            target = self.chooseBlock(blocks)
+            ## I assert that there can be a gang with no owned blocks, who could then attack anywhere if we are playing that a gang can still exist with 0 territory, or that a gang is fighting against non-territory holders
+            if target == 0:
                 self.e.append("Alas, " + j.getName() + " has found there are no more mountains to conquer!")
             else:
-                target = targetblocks[random.randint(0,len(targetblocks)-1)]
                 targetOwner = target.getOwner()
                 target.setOwner(self)
                 if type(targetOwner) != type(0):
