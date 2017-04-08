@@ -97,7 +97,7 @@ def printGangs():
 blocks = []
 
 j = 0
-while j < 4:
+while j < 5:
     y = []
     blocks.append(y)
     i = 0
@@ -108,7 +108,7 @@ while j < 4:
 
 for gang in gangs:
     testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
-    while type(testblock) == type(0):
+    while type(testblock).getOwner() == type(0):
         testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
     testblock.setOwner(gang)
     gang.changeBlockNum(1)
