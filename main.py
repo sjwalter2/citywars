@@ -108,7 +108,7 @@ while j < 5:
 
 for gang in gangs:
     testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
-    while type(testblock).getOwner() == type(0):
+    while type(testblock.getOwner()) != type(0):
         testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
     testblock.setOwner(gang)
     gang.changeBlockNum(1)
