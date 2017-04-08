@@ -22,6 +22,8 @@ class block(object):
             self.owner = 0
             self.business = business.business()
             self.coordinates = str(x) + "," + str(y)
+            self.x = x
+            self.y = y
 
         def getOwner(self):
             return self.owner
@@ -34,3 +36,9 @@ class block(object):
 
         def getCoordinates(self):
             return self.coordinates
+
+        def getX(self):
+            return self.x
+
+        def getY(self):
+            return self.y

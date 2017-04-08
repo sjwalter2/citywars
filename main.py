@@ -54,29 +54,14 @@ def stepGangs():
                     if len(gang.getMembers()) == 0:
                         destroyGang(gang)
                 else:
-                    targetblocks = []
-                    for blockx in blocks:
-                        for blocky in blockx:
-                            if blocky.getOwner() != gang:
-                                targetblocks.append(blocky)
-                    ## I assert that len(targetblocks) could be 0 if we are playing that a gang can still exist with 0 territory, or that a gang is fighting against non-territory holders
-                    if len(targetblocks) == 0:
-                        e.append("Alas, " + j.getName() + " has found there are no more mountains to conquer!")
-                    else:
-                        target = targetblocks[random.randint(0,len(targetblocks)-1)]
-                        targetOwner = target.getOwner()
-                        if type(targetOwner) != type(0):
-                            j.setNotoriety(j.getNotoriety() + 10)
-                            e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
-                            targetOwner.changeBlockNum(-1)
-                            if targetOwner.getBlockNum() == 0:
-                                destroyGang(targetOwner)
-                                j.setNotoriety(j.getNotoriety() + 30)
-                        else:
-                            j.setNotoriety(j.getNotoriety() + 5)
-                            e.append(j.getName() + " of " + gang.getName() + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
-                        gang.changeBlockNum(1)
-                        target.setOwner(gang)
+                    targetOwner = gang.takeBlock(blocks,j)
+                    if type(targetOwner) != type(0):
+                        targetOwner.changeBlockNum(-1)
+                        if targetOwner.getBlockNum() == 0:
+                            destroyGang(targetOwner)
+                            j.setNotoriety(j.getNotoriety() + 30)
+                    gang.changeBlockNum(1)
+
     if heroes.getActive() == 1:
         for j in heroes.getMembers():
             if j.step() == 1:
@@ -112,17 +97,23 @@ def printGangs():
 blocks = []
 
 j = 0
-while j < 5:
+while j < 4:
     y = []
     blocks.append(y)
     i = 0
-    while i < 5:
+    while i < 7:
         blocks[j].append(block.block(e,i,j))
-        newowner = gangs[random.randint(0,len(gangs)-1)]
-        blocks[j][i].setOwner(newowner)
-        newowner.changeBlockNum(1)
         i += 1
     j += 1
+
+for gang in gangs:
+    testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
+    while type(testblock) == type(0):
+        testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
+    testblock.setOwner(gang)
+    gang.changeBlockNum(1)
+
+
 
 ##===================================================================================================================================================
 ##===================================================================================================================================================

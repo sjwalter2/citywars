@@ -41,3 +41,26 @@ class gang(group):
         def getBlockNum(self):
             return self.blocks
 
+        def takeBlock(self,blocks,j):
+            targetblocks = []
+            for blockx in blocks:
+                for blocky in blockx:
+                    if type(blocky.getOwner()) == type(0):
+                        targetblocks.append(blocky)
+                    elif blocky.getOwner().getName() != self.name:
+                        targetblocks.append(blocky)
+                    ## I assert that len(targetblocks) could be 0 if we are playing that a gang can still exist with 0 territory, or that a gang is fighting against non-territory holders
+            if len(targetblocks) == 0:
+                self.e.append("Alas, " + j.getName() + " has found there are no more mountains to conquer!")
+            else:
+                target = targetblocks[random.randint(0,len(targetblocks)-1)]
+                targetOwner = target.getOwner()
+                target.setOwner(self)
+                if type(targetOwner) != type(0):
+                    j.setNotoriety(j.getNotoriety() + 10)
+                    self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
+                    return targetOwner
+                else:
+                        j.setNotoriety(j.getNotoriety() + 5)
+                        self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
+                        return 0
