@@ -33,10 +33,18 @@ def printLeagues():
 ##===================================================================================================================================================
 ##Gang functions
 gangs = [] 
+symbols = []
+i = 0
+mystr = "1234567890!@$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/"
+while i < len(mystr):
+    symbols.append(mystr[i])
+    i += 1
+    
 
 j = 0
 while j < 5:
-    gangs.append(gang.gang(e))
+    randnum = random.randint(0,len(symbols))
+    gangs.append(gang.gang(e,symbols.pop(randnum)))
     j += 1
 
 def stepGangs():

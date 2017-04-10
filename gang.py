@@ -18,7 +18,7 @@ def name():
     return firstname() + " " + lastname()
 
 class gang(group):
-        def __init__(self, e):
+        def __init__(self, e,symbol):
             group.__init__(self,e)
             self.name = name()
             self.blocks = 0
@@ -30,7 +30,7 @@ class gang(group):
             while i < j:
                 self.members.append(member.member(self.e,self))
                 i += 1
-            self.symbol = random.choice('1234567890!@$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/')
+            self.symbol = symbol
         
         def getSymbol(self):
             return self.symbol
