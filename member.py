@@ -22,13 +22,13 @@ class member(object):
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
             self.setHonor(random.randint(90,100))
-            self.setInertia(random.randint(0,5))
+            self.setInertia(random.randint(1,3))
 
         def step(self):
             if self.heat > 0:
                 self.heat -= 1
-            if random.randint(0,15) == 15:
-                self.heat += 50
+            if random.randint(0,self.heat) < (self.inertia * 2):
+                self.heat += 20
                 return 1
             return 0
 
@@ -54,10 +54,10 @@ class member(object):
             self.honor = i
 
         def setInertia(self,i):
-            self.Inertia = i
+            self.inertia = i
 
         def getInertia(self):
-            return self.Inertia
+            return self.inertia
 
         def getGroup(self):
             return self.group
