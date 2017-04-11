@@ -77,6 +77,7 @@ class member(object):
                 self.e.append(self.name + "(" + str(self.notoriety) + ") of " + self.getGroup().getName() + " killed " + target.getName() + "(" + str(target.getNotoriety()) + ") of " + targetgang.getName())
                 if len(targetgang.getMembers()) == 0:
                     self.notoriety = self.notoriety + 30
+                    self.e.destroyGang(targetgang)
                     return
                 if target == targetgang.getLeader():
                     targetgang.setLeader(targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)])
@@ -95,4 +96,4 @@ class member(object):
                     self.getGroup().dies(self)
                     if len(self.getGroup().getMembers()) == 0:
                         target.setNotoriety(target.getNotoriety() + 30)
-
+                        self.e.destroyGang(self.getGroup())

@@ -20,8 +20,8 @@ class league(group):
     def __init__(self,e):
         group.__init__(self,e)
         self.name = name()
-        self.active = 1
         self.leader = hero.hero(self.e,self)
+        self.active = 1
         self.members = [self.leader]
         i = 0
         j = random.randint(3,4)
@@ -32,5 +32,5 @@ class league(group):
     def getActive(self):
         return self.active
 
-    def setActive(self,num):
-        self.active = num
+    def setActive(self,state):
+        self.active = state
