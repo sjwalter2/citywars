@@ -27,19 +27,17 @@ enablepolice = 1 ##Enable police faction
 ##===================================================================================================================================================
 ##League functions
 
+##generate league
 if enableheroes == 1:
     heroes = league.league(e)
+    ##pass league to eventhandler
     e.setHeroes(heroes)
-    def printLeagues():
-        if e.heroesactive == 1:
-            print heroes.getName() + ", led by " + heroes.getLeader().getName()
-            print "Members:"
-            for j in heroes.getMembers():
-                print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
-            print ""
+
 ##===================================================================================================================================================
 ##===================================================================================================================================================
 ##Gang functions
+
+##generate symbols
 gangs = [] 
 symbols = []
 i = 0
@@ -48,13 +46,14 @@ while i < len(mystr):
     symbols.append(mystr[i])
     i += 1
     
-
+##generate gangs
 j = 0
 while j < 5:
     randnum = random.randint(0,len(symbols)-1)
     gangs.append(gang.gang(e,symbols.pop(randnum)))
     j += 1
 
+##pass gangs to eventhandler
 e.setGangs(gangs)
 
 ##===================================================================================================================================================
@@ -62,6 +61,7 @@ e.setGangs(gangs)
 ##Block generation
 blocks = []
 
+##generate blocks
 j = 0
 while j < 5:
     y = []
@@ -72,6 +72,7 @@ while j < 5:
         i += 1
     j += 1
 
+##give each gang 1 block to start
 for gang in gangs:
     testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
     while type(testblock.getOwner()) != type(0):
@@ -79,6 +80,8 @@ for gang in gangs:
     testblock.setOwner(gang)
     gang.changeBlockNum(1)
 
+
+##pass blocks to eventhandler
 e.setBlocks(blocks)
 
 ##===================================================================================================================================================
@@ -100,7 +103,7 @@ while(0==0):
     ## gangs take turn
     e.stepGangs()
     e.printGangs()
-    printLeagues()
+    e.printLeagues()
     ## print businesses
     #i = 0
     #while i < len(blocks):

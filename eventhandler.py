@@ -74,6 +74,15 @@ class eventhandler(object):
                 self.printBlocks()
                 exit()
 
+        def printLeagues(self):
+            if self.heroesactive == 1:
+                print self.heroes.getName() + ", led by " + self.heroes.getLeader().getName()
+                print "Members:"
+                for j in self.heroes.getMembers():
+                    print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+                print ""
+
+
         def printGangs(self):
                 for gang in self.gangs:
                     print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
