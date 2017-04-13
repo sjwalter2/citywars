@@ -28,6 +28,10 @@ class eventhandler(object):
             self.heroesactive = 1
             self.heroes = heroes
 
+        def setForce(self,force):
+            self.forceactive = 1
+            self.force = force
+
         def setBlocks(self,blocks):
             self.blocks = blocks
 
@@ -65,9 +69,42 @@ class eventhandler(object):
                         if len(targetgang.getMembers()) == 0:
                             self.destroyGang(targetgang)
                         if len(self.heroes.getMembers()) == 0:
-                            self.append(self.heroes.getName() + " has been disbanded!")
-                            self.heroesactive = 0
-                            self.heroes.setActive(0)
+                            ##random chance that the league will be reformed
+                            if random.randint(0,1) == 1:
+                                self.heroes.regenName()
+                                self.append(self.heroes.getName() + " has reborn!")
+                                i = 0
+                                while i < 3:
+                                    self.heroes.newMember()
+                                    i += 1
+                            else:
+                                self.append(self.heroes.getName() + " has been disbanded!")
+                                self.heroesactive = 0
+                                self.heroes.setActive(0)
+                if self.heroes.getAppeal() > random.randint(0,8):
+                    self.heroes.newMember()
+                    self.append(self.heroes.getMembers()[len(heroes.getMembers())-1].getName() + " has joined " + self.heroes.getName() + "!")
+                    self.heroes.setAppeal(self.heroes.getAppeal()-15)
+
+        def stepForce(self):
+            if self.forceactive == 1:
+                for j in self.force.getMembers():
+                    if j.step() == 1:
+                        targetgang = self.gangs[random.randint(0,len(self.gangs)-1)]
+                        j.kill(targetgang)
+                        if len(targetgang.getMembers()) == 0:
+                            self.destroyGang(targetgang)
+                        if len(self.force.getMembers()) == 0:
+                            self.append(self.force.getName() + " has been reorganized by the mayor!")
+                            i = 0
+                            while i < 3:
+                                self.force.newMember()
+                                i += 1
+                if self.force.getAppeal() > random.randint(0,8):
+                    self.force.newMember()
+                    self.append(self.force.getMembers()[len(force.getMembers())-1].getName() + " has joined " + self.force.getName() + "!")
+                    self.force.setAppeal(self.force.getAppeal()-15)
+
 
         def destroyGang(self,gang):
             self.append(gang.getName() + " has been disbanded!")
@@ -86,6 +123,13 @@ class eventhandler(object):
                     print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
                 print ""
 
+        def printForce(self):
+            if self.forceactive == 1:
+                print self.force.getName() + ", led by " + self.force.getLeader().getName()
+                print "Members:"
+                for j in self.force.getMembers():
+                    print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())
+                print ""
 
         def printGangs(self):
                 for gang in self.gangs:

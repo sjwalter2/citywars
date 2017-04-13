@@ -1,5 +1,6 @@
 import gang
 import league
+import force
 import random
 from member import member
 from hero import hero
@@ -21,7 +22,7 @@ e = eventhandler.eventhandler()
 ##Configurable Vars
 enableheroes = 1 ##Enable heroes faction
 numgangs = 5 ##Set to number of starting gangs
-enablepolice = 1 ##Enable police faction
+enableforce = 1 ##Enable police faction
 
 
 ##===================================================================================================================================================
@@ -34,6 +35,14 @@ if enableheroes == 1:
     e.setHeroes(heroes)
 
 ##===================================================================================================================================================
+##Police functions
+
+##generate police
+if enableforce == 1:
+    force = force.force(e)
+    ##pass force to eventhandler
+    e.setForce(force)
+
 ##===================================================================================================================================================
 ##Gang functions
 
@@ -102,8 +111,10 @@ while(0==0):
 
     ## gangs take turn
     e.stepGangs()
+    e.stepForce()
     e.printGangs()
     e.printLeagues()
+    e.printForce()
     ## print businesses
     #i = 0
     #while i < len(blocks):

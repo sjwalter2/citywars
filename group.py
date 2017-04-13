@@ -2,6 +2,7 @@ import random
 class group(object):
         def __init__(self, e):
             self.e = e
+            self.appeal = 0
         
         def getName(self):
             return self.name
@@ -11,6 +12,12 @@ class group(object):
 
         def getLeader(self):
             return self.leader
+
+        def getAppeal(self):
+            return self.appeal
+
+        def setAppeal(self,appeal):
+            self.appeal = appeal
 
         def dies(self,victim):
             self.members.remove(victim)
