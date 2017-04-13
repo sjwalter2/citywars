@@ -24,6 +24,7 @@ class gang(group):
             self.blocks = 0
             self.leader = member.member(self.e,self)
             self.leader.setNotoriety(random.randint(18,30))
+            self.appeal = 0
             self.members = [self.leader]
             i = 0
             j = random.randint(3,4)
@@ -89,6 +90,7 @@ class gang(group):
             if target == 0:
                 self.e.append("Alas, " + j.getName() + " has found there are no more mountains to conquer!")
             else:
+                self.setAppeal(self.getAppeal() + 1)
                 targetOwner = target.getOwner()
                 target.setOwner(self)
                 if type(targetOwner) != type(0):
@@ -99,3 +101,12 @@ class gang(group):
                         j.setNotoriety(j.getNotoriety() + 5)
                         self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
                         return 0
+
+        def getAppeal(self):
+            return self.appeal
+
+        def setAppeal(self,appeal):
+            self.appeal = appeal
+
+        def newMember(self):
+            self.members.append(member.member(self.e,self))

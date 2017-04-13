@@ -63,7 +63,7 @@ blocks = []
 
 ##generate blocks
 j = 0
-while j < 5:
+while j < 7:
     y = []
     blocks.append(y)
     i = 0

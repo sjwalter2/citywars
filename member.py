@@ -71,6 +71,7 @@ class member(object):
             if chance == 0:
                 chance = 0.01
             if random.random() < chance:
+                self.getGroup().setAppeal(self.getGroup().getAppeal() + 1)
                 targetgang.dies(target)
                 noteriety = target.getNotoriety()
                 self.notoriety = self.notoriety + target.getNotoriety()//3

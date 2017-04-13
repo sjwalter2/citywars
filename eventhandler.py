@@ -52,6 +52,10 @@ class eventhandler(object):
                                     self.destroyGang(targetOwner)
                                     j.setNotoriety(j.getNotoriety() + 30)
                             gang.changeBlockNum(1)
+                if gang.getAppeal() > random.randint(0,12):
+                    gang.newMember()
+                    self.append(gang.getMembers()[len(gang.getMembers())-1].getName() + " has joined " + gang.getName() + "!")
+                    gang.setAppeal(gang.getAppeal()-20)
 
             if self.heroesactive == 1:
                 for j in self.heroes.getMembers():
