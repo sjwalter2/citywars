@@ -1,7 +1,7 @@
 import generator
 import random
 
-firstwordsofficer = generator.wordlist("firstwordsmember")
+firstwordsofficer = generator.wordlist("firstwordsofficer")
 lastwordsofficer = generator.wordlist("lastwordsmember")
 
 def firstname():

@@ -1,9 +1,18 @@
 import random
+import gang
 
 EVENTS_LENGTH = 10
 
 class eventhandler(object):
         def __init__(self):
+            self.gangs = []
+            ##generate symbols
+            self.symbols = []
+            i = 0
+            mystr = "1234567890!@$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/"
+            while i < len(mystr):
+                self.symbols.append(mystr[i])
+                i += 1
             self.eventsqueue = []
             self.heroesactive = 0
 
@@ -21,9 +30,6 @@ class eventhandler(object):
                     i += 1
                 self.eventsqueue = tmparray
 
-        def setGangs(self,gangs):
-            self.gangs = gangs
-
         def setHeroes(self,heroes):
             self.heroesactive = 1
             self.heroes = heroes
@@ -34,6 +40,14 @@ class eventhandler(object):
 
         def setBlocks(self,blocks):
             self.blocks = blocks
+            ##give each gang 1 block to start
+            for gang in self.gangs:
+                testblock = self.blocks[random.randint(0,len(self.blocks)-1)][random.randint(0,len(self.blocks[0])-1)]
+                while type(testblock.getOwner()) != type(0):
+                    testblock = self.blocks[random.randint(0,len(self.blocks)-1)][random.randint(0,len(self.blocks[0])-1)]
+                testblock.setOwner(gang)
+                gang.changeBlockNum(1)
+
 
         def append(self, event):
             self.eventsqueue.append(event)
@@ -67,6 +81,15 @@ class eventhandler(object):
                     if type(owner) != type(0):
                         block.getOwner().addMoney(block.getBusiness().getIncome())
 
+            if random.randint(0,80) == 0:
+                self.newGang()
+                self.append(self.gangs[len(self.gangs)-1].getName() + " has formed!")
+
+        def newGang(self):
+            randnum = random.randint(0,len(self.symbols)-1)
+            self.gangs.append(gang.gang(self,self.symbols.pop(randnum)))
+
+        def stepHeroes(self):
             if self.heroes.getActive() == 1:
                 for j in self.heroes.getMembers():
                     if j.step() == 1:

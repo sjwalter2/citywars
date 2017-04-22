@@ -38,24 +38,11 @@ if enableforce == 1:
     ##pass force to eventhandler
     e.setForce(force)
 
-##generate symbols
-gangs = [] 
-symbols = []
-i = 0
-mystr = "1234567890!@$%^&*()qwertyuiopasdfghjklzxcvbnm<>?/"
-while i < len(mystr):
-    symbols.append(mystr[i])
-    i += 1
-    
 ##generate gangs
 j = 0
 while j < 5:
-    randnum = random.randint(0,len(symbols)-1)
-    gangs.append(gang.gang(e,symbols.pop(randnum)))
+    e.newGang()
     j += 1
-
-##pass gangs to eventhandler
-e.setGangs(gangs)
 
 ##===================================================================================================================================================
 ##Block generation
@@ -71,15 +58,6 @@ while j < 7:
         blocks[j].append(block.block(e,i,j))
         i += 1
     j += 1
-
-##give each gang 1 block to start
-for gang in gangs:
-    testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
-    while type(testblock.getOwner()) != type(0):
-        testblock = blocks[random.randint(0,len(blocks)-1)][random.randint(0,len(blocks[0])-1)]
-    testblock.setOwner(gang)
-    gang.changeBlockNum(1)
-
 
 ##pass blocks to eventhandler
 e.setBlocks(blocks)
@@ -102,6 +80,7 @@ while(0==0):
 
     ## gangs take turn
     e.stepGangs()
+    e.stepHeroes()
     e.stepForce()
     e.printGangs()
     e.printLeagues()
