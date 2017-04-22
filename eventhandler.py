@@ -61,7 +61,13 @@ class eventhandler(object):
                     self.append(gang.getMembers()[len(gang.getMembers())-1].getName() + " has joined " + gang.getName() + "!")
                     gang.setAppeal(gang.getAppeal()-20)
 
-            if self.heroesactive == 1:
+            for blockrow in self.blocks:
+                for block in blockrow:
+                    owner = block.getOwner()
+                    if type(owner) != type(0):
+                        block.getOwner().addMoney(block.getBusiness().getIncome())
+
+            if self.heroes.getActive() == 1:
                 for j in self.heroes.getMembers():
                     if j.step() == 1:
                         targetgang = self.gangs[random.randint(0,len(self.gangs)-1)]
@@ -87,7 +93,7 @@ class eventhandler(object):
                     self.heroes.setAppeal(self.heroes.getAppeal()-15)
 
         def stepForce(self):
-            if self.forceactive == 1:
+            if self.force.getActive() == 1:
                 for j in self.force.getMembers():
                     if j.step() == 1:
                         targetgang = self.gangs[random.randint(0,len(self.gangs)-1)]
@@ -133,7 +139,7 @@ class eventhandler(object):
 
         def printGangs(self):
                 for gang in self.gangs:
-                    print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName()
+                    print gang.getSymbol() + " " + gang.getName() + ", Led by " + gang.getLeader().getName() + "; $" + str(gang.getMoney())
                     print "Members: "
                     for j in gang.getMembers():
                         print j.getName() + ", Not:" + str(j.getNotoriety()) + ", Heat:" + str(j.getHeat()) + ", Honor:" + str(j.getHonor()) + ", Inertia:" + str(j.getInertia())

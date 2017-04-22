@@ -28,7 +28,7 @@ class member(object):
             if self.heat > 0:
                 self.heat -= 1
             if random.randint(0,self.heat) < (self.inertia * 2):
-                self.heat += 20
+                self.heat += 10
                 return 1
             return 0
 
@@ -84,7 +84,7 @@ class member(object):
                     targetgang.setLeader(targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)])
                     self.e.append(targetgang.getLeader().getName() + " is now the leader of " + targetgang.getName() + "!")
             else:
-                self.e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
+                #self.e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
                 if self.notoriety == 0:
                     chance = 100
                 else:

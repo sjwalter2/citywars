@@ -28,7 +28,7 @@ class hero(object):
             if self.heat > 0:
                 self.heat -= 1
             if random.randint(0,10) == 10:
-                self.heat += 70
+                self.heat += 20
                 return 1
             return 0
 
@@ -82,7 +82,7 @@ class hero(object):
                     targetgang.setLeader(targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)])
                     self.e.append(targetgang.getLeader().getName() + " is now the leader of " + targetgang.getName() + "!")
             else:
-                self.e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
+                #self.e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
                 if self.notoriety == 0:
                     chance = 100
                 else:

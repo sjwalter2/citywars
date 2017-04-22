@@ -22,6 +22,7 @@ class gang(group):
             group.__init__(self,e)
             self.name = name()
             self.blocks = 0
+            self.money = 0
             self.leader = member.member(self.e,self)
             self.leader.setNotoriety(random.randint(18,30))
             self.members = [self.leader]
@@ -94,12 +95,18 @@ class gang(group):
                 target.setOwner(self)
                 if type(targetOwner) != type(0):
                     j.setNotoriety(j.getNotoriety() + 10)
-                    self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
+                    #self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " from " + targetOwner.getName() + "!")
                     return targetOwner
                 else:
                         j.setNotoriety(j.getNotoriety() + 5)
-                        self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
+                        #self.e.append(j.getName() + " of " + self.name + " took over block " + str(target.getCoordinates()) + " that was just sitting there for the taking!")
                         return 0
 
         def newMember(self):
             self.members.append(member.member(self.e,self))
+
+        def addMoney(self, i):
+            self.money = self.money + i
+
+        def getMoney(self):
+            return self.money
