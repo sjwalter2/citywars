@@ -1,4 +1,4 @@
-FROM centos:7
+FROM rhel7
 ENV TERM=dumb
 ADD . /tmp/citywars
 WORKDIR /tmp/citywars
