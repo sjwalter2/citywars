@@ -2,6 +2,12 @@ import random
 import gang
 
 EVENTS_LENGTH = 10
+NEWGANGFORMCHANCE = 80 ##the higher this is, the less often new gangs form
+NEWMEMBERCHANCE = 12 ##the higher this is, the more appeal a gang needs to attract a new member
+CHOWNBLOCKNOTORIETY = 10 ##the amount of notoriety gained from taking over a block
+NEWMEMBERCOST = 10 ##Amount of appeal spent to gain a new member
+NEWHEROCHANCE = 12 ##the higher this is, the more appeal the heroes need to attract a new hero
+NEWHEROCOST = 10 ##Amount of appeal spent to gain a new hero
 
 class eventhandler(object):
         def __init__(self):
@@ -68,12 +74,12 @@ class eventhandler(object):
                                 targetOwner.changeBlockNum(-1)
                                 if targetOwner.getBlockNum() == 0:
                                     self.destroyGang(targetOwner)
-                                    j.setNotoriety(j.getNotoriety() + 30)
+                                    j.setNotoriety(j.getNotoriety() + CHOWNBLOCKNOTORIETY)
                             gang.changeBlockNum(1)
-                if gang.getAppeal() > random.randint(0,12):
+                if gang.getAppeal() > random.randint(0,NEWMEMBERCHANCE):
                     gang.newMember()
                     self.append(gang.getMembers()[len(gang.getMembers())-1].getName() + " has joined " + gang.getName() + "!")
-                    gang.setAppeal(gang.getAppeal()-20)
+                    gang.setAppeal(gang.getAppeal()-NEWMEMBERCOST)
 
             for blockrow in self.blocks:
                 for block in blockrow:
@@ -81,7 +87,7 @@ class eventhandler(object):
                     if type(owner) != type(0):
                         block.getOwner().addMoney(block.getBusiness().getIncome())
 
-            if random.randint(0,80) == 0:
+            if random.randint(0,NEWGANGFORMCHANCE) == 0:
                 self.newGang()
                 self.append(self.gangs[len(self.gangs)-1].getName() + " has formed!")
 
@@ -110,10 +116,10 @@ class eventhandler(object):
                                 self.append(self.heroes.getName() + " has been disbanded!")
                                 self.heroesactive = 0
                                 self.heroes.setActive(0)
-                if self.heroes.getAppeal() > random.randint(0,8):
+                if self.heroes.getAppeal() > random.randint(0,NEWHEROCHANCE):
                     self.heroes.newMember()
                     self.append(self.heroes.getMembers()[len(heroes.getMembers())-1].getName() + " has joined " + self.heroes.getName() + "!")
-                    self.heroes.setAppeal(self.heroes.getAppeal()-15)
+                    self.heroes.setAppeal(self.heroes.getAppeal()-NEWHEROCOST)
 
         def stepForce(self):
             if self.force.getActive() == 1:

@@ -23,7 +23,7 @@ e = eventhandler.eventhandler()
 enableheroes = 1 ##Enable heroes faction
 numgangs = 5 ##Set to number of starting gangs
 enableforce = 1 ##Enable police faction
-
+citysize = 7 ##This-1 becomes the height/width of the city; for now cities are square but the code functions with any rectangle -- note that citysize MUST be at least 2 to avoid errors
 ##==================================================================================================================================================
 
 ##generate league
@@ -40,7 +40,7 @@ if enableforce == 1:
 
 ##generate gangs
 j = 0
-while j < 5:
+while j < numgangs:
     e.newGang()
     j += 1
 
@@ -50,11 +50,11 @@ blocks = []
 
 ##generate blocks
 j = 0
-while j < 7:
+while j < citysize:
     y = []
     blocks.append(y)
     i = 0
-    while i < 7:
+    while i < citysize:
         blocks[j].append(block.block(e,i,j))
         i += 1
     j += 1
@@ -74,6 +74,7 @@ while(0==0):
             endstep = datetime(a.year,a.month,a.day,a.hour,a.minute+1,(a.second+2)%60,a.microsecond,a.tzinfo)
         else:
             endstep = a #this happens once every hour. Essentially by saying tihs, I am saying "at the end of this step just go ahead and start the next step because I cannot be assed to keep this going"
+                        #I should note that this causes a couple hundred steps to occur at the end of every hour -- this needs to be fixed, but I need to fix the way I loop anyway
                         #stupid python datetime module
     print count
     count += 1
