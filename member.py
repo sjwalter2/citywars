@@ -1,23 +1,13 @@
 import generator
 import random
+from naming.generator import NameGenerator
 
-firstwordsmember = generator.wordlist("firstwordsmember")
-lastwordsmember = generator.wordlist("lastwordsmember")
-
-def firstname():
-    return firstwordsmember[random.randint(0,len(firstwordsmember)-1)]
-
-def lastname():
-    return lastwordsmember[random.randint(0,len(lastwordsmember)-1)]
-
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('member')
 
 class member(object):
 	def __init__(self,e,gang):
             self.e = e
-            self.name = name()
+            self.name = nameGenerator.generate()
             self.group = gang
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))

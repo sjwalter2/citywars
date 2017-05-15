@@ -1,25 +1,16 @@
 from __future__ import division
 import random
 import officer
-import generator
 from group import group
 
-firstwordsforce = generator.wordlist("firstwordsforce")
-lastwordsforce = generator.wordlist("lastwordsforce")
+from naming.generator import NameGenerator
 
-def firstname():
-    return firstwordsforce[random.randint(0,len(firstwordsforce)-1)]
-
-def lastname():
-    return lastwordsforce[random.randint(0,len(lastwordsforce)-1)]
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('force')
 
 class force(group):
     def __init__(self,e):
         group.__init__(self,e)
-        self.name = self.genName()
+        self.name = nameGenerator.generate()
         self.leader = officer.officer(self.e,self)
         self.active = 1
         self.members = [self.leader]

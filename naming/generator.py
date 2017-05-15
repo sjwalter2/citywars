@@ -3,20 +3,21 @@ import os.path
 
 class NameGenerator:
 
-	PREFIX_FIRSTWORDS = 'firstwords'
-	PREFIX_LASTWORDS = 'lastwords'
+	PREFIX_FIRSTWORDS = 'naming/firstwords'
+	PREFIX_LASTWORDS = 'naming/lastwords'
 	SUFFIX_MEMBER = 'member'
 
 	def __init__ (self, type):
 		self.type = type
-		self.__firstwords = self.readWords(PREFIX_FIRSTWORDS)
-		self.__lastwords = self.readWords(PREFIX_LASTWORDS)
+		self.__firstwords = self.readWords(self.PREFIX_FIRSTWORDS)
+		self.__lastwords = self.readWords(self.PREFIX_LASTWORDS)
+		self.__businessTypes = ["Taxis","Laundry","Barbers","Shipping","Bonds","Delivery","Pizza Parlor","Taco Shack","Real Estate","Printing Company","Tourist Trap","Ice Cream Plaza"]
 
 	def readWords(self, preffix):
 		words = []
 		filename = preffix
 		if not os.path.isfile(preffix + self.type):
-			filename += SUFFIX_MEMBER
+			filename += self.SUFFIX_MEMBER
 		else:
 			filename += self.type
 

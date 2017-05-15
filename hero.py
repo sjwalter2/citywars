@@ -1,23 +1,12 @@
-import generator
 import random
+from naming.generator import NameGenerator
 
-firstwordshero = generator.wordlist("firstwordshero")
-lastwordshero = generator.wordlist("lastwordshero")
-
-def firstname():
-    return firstwordshero[random.randint(0,len(firstwordshero)-1)]
-
-def lastname():
-    return lastwordshero[random.randint(0,len(lastwordshero)-1)]
-
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('hero')
 
 class hero(object):
 	def __init__(self,e,league):
             self.e = e
-            self.name = name()
+            self.name = nameGenerator.generate()
             self.group = league
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))

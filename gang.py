@@ -1,26 +1,15 @@
 from __future__ import division
 import random
 import member
-import generator
 from group import group
+from naming.generator import NameGenerator
 
-firstwordsgang = generator.wordlist("firstwordsgang")
-lastwordsgang = generator.wordlist("lastwordsgang")
-
-def firstname():
-    return firstwordsgang[random.randint(0,len(firstwordsgang)-1)]
-
-def lastname():
-    return lastwordsgang[random.randint(0,len(lastwordsgang)-1)]
-
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('gang')
 
 class gang(group):
-        def __init__(self, e,symbol):
+        def __init__(self, e, symbol):
             group.__init__(self,e)
-            self.name = name()
+            self.name = nameGenerator.generate()
             self.blocks = 0
             self.money = 0
             self.leader = member.member(self.e,self)

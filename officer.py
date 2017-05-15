@@ -1,23 +1,13 @@
 import generator
 import random
+from naming.generator import NameGenerator
 
-firstwordsofficer = generator.wordlist("firstwordsofficer")
-lastwordsofficer = generator.wordlist("lastwordsmember")
-
-def firstname():
-    return firstwordsofficer[random.randint(0,len(firstwordsofficer)-1)]
-
-def lastname():
-    return lastwordsofficer[random.randint(0,len(lastwordsofficer)-1)]
-
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('officer')
 
 class officer(object):
 	def __init__(self,e,force):
             self.e = e
-            self.name = name()
+            self.name = nameGenerator.generate()
             self.group = force
             self.setHeat(random.randint(0,100))
             self.setNotoriety(random.randint(0,20))
