@@ -1,16 +1,16 @@
 import random
-import business
-
-from naming.generator import NameGenerator
+from generator.business import BusinessGenerator
+from generator.naming import NameGenerator
 
 nameGenerator = NameGenerator('block')
+businessGenerator = BusinessGenerator()
 
 class block(object):
         def __init__(self, e, x, y):
             self.e = e
             self.name = nameGenerator.generate()
             self.owner = 0
-            self.business = business.business()
+            self.business = businessGenerator.generate()
             self.coordinates = str(x) + "," + str(y)
             self.x = x
             self.y = y

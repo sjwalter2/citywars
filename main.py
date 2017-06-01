@@ -1,14 +1,8 @@
-import gang
-import league
-import force
-import random
-from member import member
-from hero import hero
-from datetime import time, datetime, timedelta
 from time import sleep
 import os
 import block
 import eventhandler
+from model.groups import Gang, Force, League
 
 if os.name == 'nt':
     clear = 'cls'
@@ -28,21 +22,15 @@ citysize = 7 ##This-1 becomes the height/width of the city; for now cities are s
 
 ##generate league
 if enableheroes == 1:
-    heroes = league.league(e)
-    ##pass league to eventhandler
-    e.setHeroes(heroes)
+    e.setHeroes()
 
 ##generate police
 if enableforce == 1:
-    force = force.force(e)
-    ##pass force to eventhandler
-    e.setForce(force)
+    e.setForce()
 
 ##generate gangs
-j = 0
-while j < numgangs:
+for j in range(numgangs):
     e.newGang()
-    j += 1
 
 ##===================================================================================================================================================
 ##Block generation
@@ -64,19 +52,10 @@ e.setBlocks(blocks)
 
 ##===================================================================================================================================================
 ##Main Loop
-while(0==0):
+while 1:
     os.system(clear)
-    a = datetime.now()
-    if a.second < 58:
-        endstep = datetime(a.year,a.month,a.day,a.hour,a.minute,a.second+2,a.microsecond,a.tzinfo)
-    else:
-        if a.minute < 59:
-            endstep = datetime(a.year,a.month,a.day,a.hour,a.minute+1,(a.second+2)%60,a.microsecond,a.tzinfo)
-        else:
-            endstep = a #this happens once every hour. Essentially by saying tihs, I am saying "at the end of this step just go ahead and start the next step because I cannot be assed to keep this going"
-                        #I should note that this causes a couple hundred steps to occur at the end of every hour -- this needs to be fixed, but I need to fix the way I loop anyway
-                        #stupid python datetime module
-    print count
+
+    print(count)
     count += 1
 
     ## gangs take turn
@@ -98,5 +77,4 @@ while(0==0):
     e.printBlocks()
     e.step()
 
-    while datetime.now() < endstep:
-        sleep(0.000001)
+    sleep(1.5)
