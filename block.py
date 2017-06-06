@@ -1,26 +1,16 @@
 import random
-import generator
-import business
+from generator.business import BusinessGenerator
+from generator.naming import NameGenerator
 
-firstwordsblock = generator.wordlist("firstwordsblock")
-lastwordsblock = generator.wordlist("lastwordsblock")
-
-def firstname():
-    return firstwordsblock[random.randint(0,len(firstwordsblock)-1)]
-
-def lastname():
-    return lastwordsblock[random.randint(0,len(lastwordsblock)-1)]
-
-
-def name():
-    return firstname() + " " + lastname()
+nameGenerator = NameGenerator('block')
+businessGenerator = BusinessGenerator()
 
 class block(object):
         def __init__(self, e, x, y):
             self.e = e
-            self.name = name()
+            self.name = nameGenerator.generate()
             self.owner = 0
-            self.business = business.business()
+            self.business = businessGenerator.generate()
             self.coordinates = str(x) + "," + str(y)
             self.x = x
             self.y = y
