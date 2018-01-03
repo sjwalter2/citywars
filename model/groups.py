@@ -22,6 +22,10 @@ class Group:
         for i in range(random.randint(3,4)):
             self.members.append(self.memberGenerator.generate())
 
+    ##overwrite name
+    def setName(self, newName):
+        self.name = newName
+
     def getName(self):
         return self.name
 
@@ -93,6 +97,7 @@ class Gang(Group):
         self.blocks = 0
         self.money = 0
         self.symbol = symbol
+        self.playerControlled = 0
 
     def getType(self):
         return self.TYPE
@@ -106,25 +111,39 @@ class Gang(Group):
     def getBlockNum(self):
         return self.blocks
 
+    def performAction(self,member):
+        ##60% chance to attempt to take a block; 40% chance to attempt to assassinate an opponent
+        if random.random() < 0.4:
+            targetgang = self.e.gangs[random.randint(0,len(self.e.gangs)-1)]
+            while targetgang.getName() == self.getName():
+                targetgang = self.e.gangs[random.randint(0,len(self.e.gangs)-1)]
+            member.kill(targetgang)
+        else:
+            targetOwner = self.takeBlock(self.e.blocks, member)
+            if type(targetOwner) != type(0):
+                targetOwner.changeBlockNum(-1)
+                if targetOwner.getBlockNum() == 0:
+                    self.e.destroyGang(targetOwner)
+                    member.getAttributes()[ATTR_TYPE.NOTORIETY].increase(CHOWNBLOCKNOTORIETY)
+                self.changeBlockNum(1)
+
     def step(self):
-        for member in self.getMembers():
-            if member.step() == 1:
-                ##60% chance to attempt to take a block; 40% chance to attempt to assassinate an opponent
-                if random.random() < 0.4:
-                    targetgang = self.e.gangs[random.randint(0,len(self.e.gangs)-1)]
-                    while targetgang.getName() == self.getName():
-                        targetgang = self.e.gangs[random.randint(0,len(self.e.gangs)-1)]
-                    member.kill(targetgang)
+        if self.isPlayerControlled():
+            for member in self.getMembers():
+                response = raw_input("Have " + member.getName() + " act?")
+                if response in "yY":
+                    member.getAttributes()[ATTR_TYPE.HEAT].increase(10)
+                    self.performAction(member)
                 else:
-                    targetOwner = self.takeBlock(self.e.blocks, member)
-                    if type(targetOwner) != type(0):
-                        targetOwner.changeBlockNum(-1)
-                        if targetOwner.getBlockNum() == 0:
-                            self.e.destroyGang(targetOwner)
-                            member.getAttributes()[ATTR_TYPE.NOTORIETY].increase(CHOWNBLOCKNOTORIETY)
-                    self.changeBlockNum(1)
-            if self.appeal > random.randint(0, NEWMEMBERCHANCE):
-                self.newMember()
+                    member.getAttributes()[ATTR_TYPE.HEAT].decrease(1)
+                if self.appeal > random.randint(0, NEWMEMBERCHANCE):
+                    self.newMember()
+        else:
+            for member in self.getMembers():
+                if member.step() == 1:
+                    self.performAction(member)
+                if self.appeal > random.randint(0, NEWMEMBERCHANCE):
+                    self.newMember()
 
     ##Choose a block, adjacent to an owned block, that this gang does not own
     def chooseBlock(self,blocks):
@@ -192,3 +211,9 @@ class Gang(Group):
 
     def getMoney(self):
         return self.money
+
+    def setPlayerControlled(self,isPlayerControlled):
+        self.playerControlled = isPlayerControlled
+
+    def isPlayerControlled(self):
+        return self.playerControlled

@@ -15,9 +15,10 @@ e = eventhandler.eventhandler()
 ##==================================================================================================================================================
 ##Configurable Vars
 enableheroes = 1 ##Enable heroes faction
-numgangs = 5 ##Set to number of starting gangs
+numgangs = 2 ##Set to number of starting gangs
 enableforce = 1 ##Enable police faction
 citysize = 7 ##This-1 becomes the height/width of the city; for now cities are square but the code functions with any rectangle -- note that citysize MUST be at least 2 to avoid errors
+enableplayergang = 0
 ##==================================================================================================================================================
 
 ##generate league
@@ -28,9 +29,15 @@ if enableheroes == 1:
 if enableforce == 1:
     e.setForce()
 
+
+##generate playergang
+if enableplayergang == 1:
+    e.newPlayerGang()
+
 ##generate gangs
 for j in range(numgangs):
     e.newGang()
+
 
 ##===================================================================================================================================================
 ##Block generation

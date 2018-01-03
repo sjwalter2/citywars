@@ -74,6 +74,12 @@ class eventhandler:
             self.gangs.append(Gang(self,self.symbols.pop(randnum)))
             self.append('{} has formed!'.format(self.gangs[len(self.gangs)-1].getName()))
 
+        def newPlayerGang(self):
+            randnum = random.randint(0,len(self.symbols)-1)
+            self.gangs.append(Gang(self,self.symbols.pop(randnum)))
+            self.append('{} has formed!'.format(self.gangs[len(self.gangs)-1].getName()))
+            self.gangs[len(self.gangs)-1].setPlayerControlled(1)
+
         def stepHeroes(self):
             if self.heroesactive == 1:
                 self.heroes.step()
@@ -130,6 +136,7 @@ class eventhandler:
         def printGangs(self):
             for gang in self.gangs:
                 print ('{} {}, Led by {}; ${}'.format(gang.getSymbol(), gang.getName(), gang.getLeader().getName(), gang.getMoney()))
+                print gang.isPlayerControlled()
                 self.printMembers(gang.getMembers())
 
         def wipeBlocks(self,gang):

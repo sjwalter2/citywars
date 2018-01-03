@@ -98,7 +98,9 @@ class Member:
                 targetgang.setLeader(targetgang.getMembers()[random.randint(0,len(targetgang.getMembers())-1)])
                 self.e.append('{} is now the leader of {}!'.format(targetgang.getLeader().getName(), targetgang.getName()))
         else:
-            #self.__e.append(self.name + " of " + self.getGroup().getName() + " failed to kill " + target.getName() + " of " + targetgang.getName() + "!")
+            self.__e.append('{}({}) of {} failed to kill {}({}) of {}'.format(self.__name, \
+                self.__attributes[ATTR_TYPE.NOTORIETY].getValue(), self.__gang.getName(), target.getName(), \
+                target.getAttributes()[ATTR_TYPE.NOTORIETY].getValue(), targetgang.getName()))
             if self.__attributes[ATTR_TYPE.NOTORIETY].getValue() == 0:
                 chance = 100
             else:
