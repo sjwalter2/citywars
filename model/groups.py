@@ -112,6 +112,8 @@ class Gang(Group):
         return self.blocks
 
     def performAction(self,member):
+        if len(self.e.gangs) == 1:
+            return
         ##60% chance to attempt to take a block; 40% chance to attempt to assassinate an opponent
         if random.random() < 0.4:
             targetgang = self.e.gangs[random.randint(0,len(self.e.gangs)-1)]

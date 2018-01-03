@@ -1,4 +1,5 @@
 import random
+import os
 from model.players import ATTR_TYPE
 from model.groups import Gang, Force, League
 
@@ -10,6 +11,7 @@ NEWHEROCHANCE = 12 ##the higher this is, the more appeal the heroes need to attr
 
 class eventhandler:
         def __init__(self):
+            self.gameover = 0
             self.gangs = []
             ##generate symbols
             self.symbols = []
@@ -111,9 +113,7 @@ class eventhandler:
             self.gangs.remove(gang)
             self.wipeBlocks(gang)
             if len(self.gangs) == 1:
-                print ('{} has taken over the city!'.format(self.gangs[0].getName()))
-                self.printBlocks()
-                exit()
+                self.gameover = 1
                 
         def printMembers(self, members):
             print ('Members:')
@@ -136,7 +136,6 @@ class eventhandler:
         def printGangs(self):
             for gang in self.gangs:
                 print ('{} {}, Led by {}; ${}'.format(gang.getSymbol(), gang.getName(), gang.getLeader().getName(), gang.getMoney()))
-                print gang.isPlayerControlled()
                 self.printMembers(gang.getMembers())
 
         def wipeBlocks(self,gang):

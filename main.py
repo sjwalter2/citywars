@@ -9,13 +9,14 @@ if os.name == 'nt':
 else:
     clear = 'clear'
 
+
 count = 0
 e = eventhandler.eventhandler()
 
 ##==================================================================================================================================================
 ##Configurable Vars
 enableheroes = 1 ##Enable heroes faction
-numgangs = 2 ##Set to number of starting gangs
+numgangs = 3 ##Set to number of starting gangs
 enableforce = 1 ##Enable police faction
 citysize = 7 ##This-1 becomes the height/width of the city; for now cities are square but the code functions with any rectangle -- note that citysize MUST be at least 2 to avoid errors
 enableplayergang = 0
@@ -69,6 +70,7 @@ while 1:
     e.stepGangs()
     e.stepHeroes()
     e.stepForce()
+
     e.printGangs()
     e.printLeagues()
     e.printForce()
@@ -82,6 +84,9 @@ while 1:
     #    i += 1
 
     e.printBlocks()
+    if e.gameover == 1:
+        print ('{} has taken over the city!'.format(e.gangs[0].getName()))
+        quit()
     e.step()
 
-    sleep(1.5)
+    sleep(0.1)
