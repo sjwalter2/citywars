@@ -89,4 +89,4 @@ while 1:
         quit()
     e.step()
 
-    sleep(0.1)
+    sleep(1.5)
