@@ -132,7 +132,7 @@ class Gang(Group):
     def step(self):
         if self.isPlayerControlled():
             for member in self.getMembers():
-                response = raw_input("Have " + member.getName() + " act?")
+                response = input("Have " + member.getName() + " act?")
                 if response in "yY":
                     member.getAttributes()[ATTR_TYPE.HEAT].increase(10)
                     self.performAction(member)
