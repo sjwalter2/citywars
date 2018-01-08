@@ -19,7 +19,7 @@ enableheroes = 1 ##Enable heroes faction
 numgangs = 3 ##Set to number of starting gangs
 enableforce = 1 ##Enable police faction
 citysize = 7 ##This-1 becomes the height/width of the city; for now cities are square but the code functions with any rectangle -- note that citysize MUST be at least 2 to avoid errors
-enableplayergang = 0
+enableplayergang = 1
 ##==================================================================================================================================================
 
 ##generate league
@@ -67,9 +67,7 @@ while 1:
     count += 1
 
     ## gangs take turn
-    e.stepGangs()
-    e.stepHeroes()
-    e.stepForce()
+    e.stepGroups()
 
     e.printGangs()
     e.printLeagues()

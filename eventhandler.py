@@ -12,8 +12,12 @@ NEWHEROCHANCE = 12 ##the higher this is, the more appeal the heroes need to attr
 class eventhandler:
         def __init__(self):
             self.gameover = 0
+            self.readytoplay = 1 ##Use this to determine if the player has accepted their turn
+            self.turnindex = 0 ##use this to determine which set of groups' turn it is
+            self.gangindex = 0 ##use this to determine whose turn it is within the gangs
             self.gangs = []
             self.groups = []
+            self.groups.append(self.gangs)
             ##generate symbols
             self.symbols = []
             i = 0
@@ -41,10 +45,12 @@ class eventhandler:
         def setHeroes(self):
             self.heroesactive = 1
             self.heroes = League(self)
+            self.groups.append(self.heroes)
 
         def setForce(self):
             self.forceactive = 1
             self.force = Force(self)
+            self.groups.append(self.force)
 
         def setBlocks(self, blocks):
             self.blocks = blocks
@@ -59,18 +65,42 @@ class eventhandler:
         def append(self, event):
             self.eventsqueue.append(event)
 
+        def stepGroups(self):
+            if self.turnindex == 0: ##case: it is a gang's turn
+                if self.gangindex == len(self.gangs):
+                    self.turnindex += 1
+                    self.gangindex = 0
+                    return
+                else:
+                    if(self.stepGangs()): ## stepGangs will return 1 if the gang took a step, 0 otherwise
+                        self.gangindex += 1
+            elif self.turnindex == 1: ## case: it is the heroes' turn
+                self.stepHeroes()
+                self.turnindex += 1
+            elif self.turnindex == 2: ## case: it is the police force's turn
+                self.stepForce()
+                self.turnindex += 1
+            else: ## everyone has taken their turn, time to do some "cleanup"
+                for blockrow in self.blocks:
+                    for block in blockrow:
+                        owner = block.getOwner()
+                        if type(owner) != type(0):
+                            block.getOwner().addMoney(block.getBusiness().getIncome())
+                if random.randint(0,NEWGANGFORMCHANCE) == 0:
+                    self.newGang()
+                self.turnindex = 0
+
         def stepGangs(self):
-            for gang in self.gangs:
+            gang = self.gangs[self.gangindex]
+            if gang.isPlayerControlled():
+                if self.readytoplay == 1:
+                    gang.step()
+                    return 1
+                else:
+                    return 0
+            else:
                 gang.step()
-
-            for blockrow in self.blocks:
-                for block in blockrow:
-                    owner = block.getOwner()
-                    if type(owner) != type(0):
-                        block.getOwner().addMoney(block.getBusiness().getIncome())
-
-            if random.randint(0,NEWGANGFORMCHANCE) == 0:
-                self.newGang()
+                return 1
 
         def newGang(self):
             randnum = random.randint(0,len(self.symbols)-1)
