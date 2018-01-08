@@ -67,7 +67,7 @@ class eventhandler:
 
         def stepGroups(self):
             if self.turnindex == 0: ##case: it is a gang's turn
-                if self.gangindex == len(self.gangs):
+                if self.gangindex >= len(self.gangs):
                     self.turnindex += 1
                     self.gangindex = 0
                     return
