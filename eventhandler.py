@@ -13,6 +13,7 @@ class eventhandler:
         def __init__(self):
             self.gameover = 0
             self.gangs = []
+            self.groups = []
             ##generate symbols
             self.symbols = []
             i = 0
